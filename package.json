@@ -1,6 +1,7 @@
 {
   "name": "graph-structured-viewer",
   "scripts": {
+    "start": "webpack-dev-server --open",
     "build": "webpack"
   },
   "devDependencies": {
