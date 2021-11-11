@@ -1,7 +1,7 @@
 {
   "name": "graph-structured-viewer",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "devDependencies": {
     "webpack": "^5.64.0",
