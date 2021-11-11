@@ -1,0 +1,1 @@
+document.getElementById("msgId").value = 'build test';
