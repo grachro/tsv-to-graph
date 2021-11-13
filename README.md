@@ -3,9 +3,10 @@
 ## project info
 
 ### dependencies
-- "cytoscape": "^3.20.0"
-- "cytoscape-fcose": "^2.1.0"
-- "cytoscape-context-menus": "^4.1.0",
+- "cytoscape": "^3.20.0"  ([Repo](https://github.com/cytoscape/cytoscape.js))
+- "cytoscape-fcose": "^2.1.0"  ([Repo](https://github.com/iVis-at-Bilkent/cytoscape.js-fcose))
+- "cytoscape-context-menus": "^4.1.0"  ([Repo](https://github.com/iVis-at-Bilkent/cytoscape.js-context-menus))
+- "cytoscape-svg": "^0.3.1"  ([Repo](https://github.com/kinimesi/cytoscape-svg))
 
 ### devDependencies
 - "webpack": "^5.64.0",
@@ -20,6 +21,7 @@ npm install webpack-dev-server --save-dev
 npm install cytoscape
 npm install cytoscape-fcose
 npm install cytoscape-context-menus
+npm install cytoscape-svg
 ```
 
 
