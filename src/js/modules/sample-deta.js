@@ -1,27 +1,42 @@
 export const sampleData = `#type	id	label	nodeType	parent	x	y
-node	n1	node 1	normalNode			
-node	n2	node 2	normalNode			
-node	n3	node 3	normalNode			
-node	n4	node 4	normalNode			
-node	n5	node 5	normalNode	n10		
-node	n6	node 6	normalNode	n10		
-node	n7	node 7	normalNode	n11		
-node	n8	node 8	normalNode	n11		
-node	n9	node 9	normalNode	n12		
-node	n10	node 10	normalNode			
-node	n11	node 11	normalNode	n13		
-node	n12	node 12	normalNode	n13		
+#====
+node	n1	node 1	TypeA			
+node	n2	node 2	TypeA			
+node	n3	node 3	TypeA			
+node	n4	node 4	TypeA			
+node	n5	node 5	TypeB	n10		
+node	n6	node 6	TypeB	n10		
+node	n7	node 7		n11		
+node	n8	node 8	TypeC	n11		
+node	n9	node 9		n12		
+node	n10	node 10				
+node	n11	node 11		n13		
+node	n12	node 12		n13		
 node	n13	node 13				
-						
-#type	source	target				
-edge	n1	n2				
-edge	n1	n3				
-edge	n3	n4				
-edge	n2	n4				
-edge	n4	n5				
-edge	n5	n6				
-edge	n7	n8				
-edge	n6	n7				
-edge	n11	n12				
-edge	n2	n12				
+
+#type	source	target	targetType
+#====
+edge	n1	n2
+edge	n1	n3	TypeO
+edge	n3	n4	
+edge	n2	n4	TypeP
+edge	n4	n5
+edge	n5	n6
+edge	n7	n8
+edge	n6	n7	TypeQ
+edge	n11	n12	TypeR
+edge	n2	n12
+
+#type	selector	background-color	shape
+#====
+node-style	node.TypeA	#7fbfff	
+node-style	node.TypeB		round-octagon
+node-style	node.TypeC	#ff7f7f	ellipse
+
+#type	selector	line-color	line-style
+#====
+edge-style	edge.TypeO	#bf7fff	solid
+edge-style	edge.TypeP		dotted
+edge-style	edge.TypeQ	#ffbf7f
+edge-style	edge.TypeR	#ffbf7f	dashed
 `;

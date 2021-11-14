@@ -3,7 +3,7 @@ import fcose from "cytoscape-fcose";
 import contextMenus from "cytoscape-context-menus";
 import svg from 'cytoscape-svg';
 import { sampleData } from "./modules/sample-deta";
-import { defaultStyle } from "./modules/graph-style";
+import { getDefaultStyle } from "./modules/graph-style";
 import { createMouseMenuItems } from "./modules/menuItems";
 import { tsvToCyElementsAndLockNodes, editSaveTsv } from "./modules/save-load";
 
@@ -88,7 +88,43 @@ function readTsv(tsv) {
 	}
 	refreshLayout(newElementsAndLockNodes.lockNodes);
 	cy.style().resetToDefault().update();
-	cy.style(defaultStyle).update();
+
+	const styleArray = [];
+	for(const [key, value] of getDefaultStyle().entries()) {
+		styleArray.push(
+			{
+				selector:  key,
+				style: value
+			}
+		);
+	};
+	for (const nodeStyle of newElementsAndLockNodes.nodeStyles) {
+		styleArray.push(
+			{
+				selector: nodeStyle.selector,
+				style: {
+					'background-color': nodeStyle.backgroundColor,
+					'shape': nodeStyle.shape,
+				}
+			}
+		);
+	}
+	for (const lineStyle of newElementsAndLockNodes.lineStyles) {
+		styleArray.push(
+			{
+				selector: lineStyle.selector,
+				style: {
+					'line-color': lineStyle.lineColor,
+					'target-arrow-color': lineStyle.lineColor,
+					'line-style': lineStyle.lineStyle,
+
+				}
+			}
+		);
+	}
+
+	
+	cy.style(styleArray).update();
  
 }
 
@@ -162,10 +198,10 @@ function updateLockedNodePosition(node) {
 }
 
 
-let download = function(text) {
+let download = function(fileName, text) {
 	var aTag = document.createElement('a');
 	aTag.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-	aTag.setAttribute('download', "graph.tsv");
+	aTag.setAttribute('download', fileName);
  	aTag.click();
 };
 
@@ -195,9 +231,19 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	document.getElementById("export-btn").addEventListener('click', event => {
-		const tsv = editSaveTsv(cy, lockedNodeIds);
-		download(tsv);
+		const arr =  Array.from(getDefaultStyle().keys());
+		var defaultStyleSelections = new Set(arr);
+		
+		const tsv = editSaveTsv(cy, lockedNodeIds, defaultStyleSelections);
+		download("graph.tsv", tsv);
   });
+
+	document.getElementById("export-meta-btn").addEventListener('click', event => {
+ 		const json = JSON.stringify(cy.json())
+		download("meta.json", json);
+  });
+	
+
 
 	cy.on('tapend', 'node.__position-locked__' , function(evt){
 		var node = evt.target;
