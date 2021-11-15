@@ -5,7 +5,9 @@ import svg from 'cytoscape-svg';
 import { sampleData } from "./modules/sample-deta";
 import { getDefaultStyle } from "./modules/graph-style";
 import { createMouseMenuItems } from "./modules/menuItems";
-import { tsvToCyElementsAndLockNodes, editSaveTsv } from "./modules/save-load";
+import { loadTsv } from "./modules/tsv_load";
+import { editSaveTsv } from "./modules/tsv_save";
+import { utils } from "./modules/cy_utils";
 
 cytoscape.use(fcose);
 cytoscape.use(contextMenus);
@@ -59,22 +61,10 @@ function refreshLayout(defaultLockNodePositions) {
 		})
 		.run();
 
-	refreshLockNodesLi();
-}
-
-function refreshLockNodesLi() {
-	const ul = document.getElementById("lock-nodes-ul")
-	ul.innerHTML = '';
-	for (const lockedNodeId of lockedNodeIds.values()) {
-		const li	= document.createElement("li");
-		li.innerHTML = lockedNodeId;
-		ul.append(li);
-	}
-
 }
 
 function readTsv(tsv) {
-	const newElementsAndLockNodes = tsvToCyElementsAndLockNodes(tsv);
+	const newElementsAndLockNodes = loadTsv(tsv);
 
 	cy.elements().remove();
 	cy.json({ elements: {
@@ -93,7 +83,7 @@ function readTsv(tsv) {
 	for(const [key, value] of getDefaultStyle().entries()) {
 		styleArray.push(
 			{
-				selector:  key,
+				selector: key,
 				style: value
 			}
 		);
@@ -242,18 +232,47 @@ document.addEventListener("DOMContentLoaded", function () {
  		const json = JSON.stringify(cy.json())
 		download("meta.json", json);
   });
-	
-
 
 	cy.on('tapend', 'node.__position-locked__' , function(evt){
 		var node = evt.target;
 		updateLockedNodePosition(node);
 	});
 
+	cy.on('tapend', function(evt){
+	
+		const span = document.getElementById("selected-node-span")
+ 
+		const elm = utils.getElmFromEvent(cy, evt); 
+		if(elm) {
+			span.innerHTML = '[' + elm.id() + ']:' + elm.data().label;
+		} else {
+			span.innerHTML = '';
+		}
+
+		
+	});
+
+
 	document.getElementById("svg-btn").addEventListener('click', event => {
-		window.open(getSvgUrl(), '_blank')
+		var aTag = document.createElement('a');
+		aTag.setAttribute('href', getSvgUrl());
+		aTag.setAttribute('download', 'graph.svg');
+		aTag.click();
   });
 	
+	document.getElementById("import-text-btn").addEventListener('click', event => {
+		const tsv = document.getElementById("tsv-textarea").value 
+		readTsv(tsv);
+  });
+	
+
+	document.getElementById("search-btn").addEventListener('click', event => {
+		const srachText = document.getElementById("search-input").value 
+		cy.elements().unselect()
+		cy.getElementById(srachText).select()
+  });
+
+ 
 	readTsv(sampleData);
 });
 
