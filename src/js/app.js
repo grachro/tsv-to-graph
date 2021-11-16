@@ -6,7 +6,7 @@ import { sampleData } from "./modules/sample-deta";
 import { getDefaultStyle } from "./modules/graph-style";
 import { createMouseMenuItems } from "./modules/menuItems";
 import { loadTsv } from "./modules/tsv_load";
-import { editSaveTsv } from "./modules/tsv_save";
+import { editSaveTsv, editSeclectedTsv } from "./modules/tsv_save";
 import { utils } from "./modules/cy_utils";
 
 cytoscape.use(fcose);
@@ -239,9 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	cy.on('tapend', function(evt){
-	
 		const span = document.getElementById("selected-node-span")
- 
 		const elm = utils.getElmFromEvent(cy, evt); 
 		if(elm) {
 			span.innerHTML = '[' + elm.id() + ']:' + elm.data().label;
@@ -249,6 +247,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			span.innerHTML = '';
 		}
 
+		const tsv = editSeclectedTsv(cy, lockedNodeIds);
+		document.getElementById("export-tsv-textarea").value = tsv; 
+		
 		
 	});
 
@@ -260,8 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		aTag.click();
   });
 	
-	document.getElementById("import-text-btn").addEventListener('click', event => {
-		const tsv = document.getElementById("tsv-textarea").value 
+	document.getElementById("replace-form-tsv-btn").addEventListener('click', event => {
+		const tsv = document.getElementById("import-tsv-textarea").value 
 		readTsv(tsv);
   });
 	

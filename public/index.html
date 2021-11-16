@@ -16,9 +16,9 @@
   </div>
   
   <div id='side-panel'>
-    <button id="import-btn" onclick="document.getElementById('import-file').click();">import</button>
+    <button id="import-btn" onclick="document.getElementById('import-file').click();">import from tsv</button>
     <input id="import-file" type="file" style="display: none;">
-    <button id="export-btn">export</button>
+    <button id="export-btn">export to tsv</button>
     <br>
     <button id="svg-btn">svg</button>
     <br>
@@ -28,8 +28,12 @@
     <button id="export-meta-btn">export Cytoscape.js json</button>
     <br>
     <br>
-    <button id="import-text-btn">load save data</button><br>
-    <textarea id="tsv-textarea" cols="30" rows="2" style="width: 350px;max-width: 350px;"></textarea>
+    import tsv <button id="replace-form-tsv-btn">replace all</button><br>
+    <textarea id="import-tsv-textarea" cols="30" rows="2" style="width: 350px;max-width: 350px;"></textarea>
+    <br>
+    <br>
+    export tsv<br>
+    <textarea id="export-tsv-textarea" cols="30" rows="2" style="width: 350px;max-width: 350px;"></textarea>
     <br>
     <br>
     selected node: 

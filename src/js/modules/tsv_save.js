@@ -1,56 +1,16 @@
+
+const BOADER = "#====\n";
+
 export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
  
 	const cyJson = cy.json();
-	const BOADER = "#====\n";
 
-	const NODE_HEAD = "#type\tid\tlabel\tnodeType\tparent\tx\ty\n";
-
-	let result = NODE_HEAD;
-	result += BOADER
-	if (cyJson.elements.nodes) {
-		for (const cyNode of cyJson.elements.nodes) {
-			const id = cyNode.data.id;
-			const label = cyNode.data.label;
-			const classes = cyNode.classes || "";
-			const parent = cyNode.data.parent || "";
-
-			const classEx = []
-			for (const c of classes.split(' ')) {
-				if(c && c != '__position-locked__') {
-					classEx.push(c)
-				}
-			}
-
-
-			const isLock = lockedNodeIds.has(id);
-			const x = isLock ? parseInt(cyNode.position.x) : "";
-			const y = isLock ? parseInt(cyNode.position.y) : "";
-
-			let s = "node\t" + id + "\t" + label + "\t" + classEx + "\t" + parent + "\t" + x + "\t" + y;
-			result += s + "\n";
-		}
-	} else {
-		result += "#empty nodes\n";
-	}
+	let result = "";
+	result += nodesToTsv(cy.nodes(), lockedNodeIds);
 
 	result += "\n"
-	const EDGE_HEAD = "#type\tsource\ttarget\n";
-	result += EDGE_HEAD
-	result += BOADER
-	if (cyJson.elements.edges) {
-		for (const cyEdge of cyJson.elements.edges) {
-			const source = cyEdge.data.source;
-			const target = cyEdge.data.target;
-			const classes = cyEdge.classes || "";
-
-			let s = "edge\t" + source + "\t" + target + "\t" + classes;
-			result += s + "\n";
-		}
-	} else {
-		result += "#empty edges\n";
-	}
-
-
+	result += edgesToTsv(cy.edges());
+ 
 	const nodeStyles = [];
 	const edgeStyles = [];
 	if (cyJson.style) {
@@ -102,5 +62,87 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 		result += "#empty edge-styles\n";
 	}
 
+	return result;
+}
+
+function nodesToTsv(nodes, lockedNodeIds) {
+
+	const NODE_HEAD = "#type\tnodeId\tlabel\tnodeType\tparentNodeId\tx\ty\n";
+	let result = NODE_HEAD;
+	result += BOADER
+
+	if (!nodes || nodes.length == 0) {
+		result += "#empty nodes\n";
+		return result;
+	}
+
+	for (const cyNode of nodes.jsons()) {
+		const id = cyNode.data.id;
+		const label = cyNode.data.label;
+		const classes = cyNode.classes || "";
+		const parent = cyNode.data.parent || "";
+
+		const classEx = []
+		for (const c of classes.split(' ')) {
+			if(c && c != '__position-locked__') {
+				classEx.push(c)
+			}
+		}
+
+
+		const isLock = lockedNodeIds.has(id);
+		const x = isLock ? parseInt(cyNode.position.x) : "";
+		const y = isLock ? parseInt(cyNode.position.y) : "";
+
+		let s = "node\t" + id + "\t" + label + "\t" + classEx + "\t" + parent + "\t" + x + "\t" + y;
+		result += s + "\n";
+	}
+
+	return result;
+ 
+}
+
+
+function edgesToTsv(edges) {
+
+	const EDGE_HEAD = "#type\tsourceNodeId\ttargetNodeId\n";
+	let result = EDGE_HEAD;
+	result += BOADER
+
+	if (!edges || edges.length == 0) {
+		result += "#empty edges\n";
+		return result;
+	}
+
+	
+	for (const cyEdge of edges.jsons()) {
+		const source = cyEdge.data.source;
+		const target = cyEdge.data.target;
+		const classes = cyEdge.classes || "";
+
+		let s = "edge\t" + source + "\t" + target + "\t" + classes;
+		result += s + "\n";
+	}
+ 
+	return result;
+}
+
+
+export function editSeclectedTsv(cy, lockedNodeIds) {
+	let result = "";
+
+	
+	var nodeList =  cy.collection();
+	cy.nodes( ":selected" ).forEach(node => {
+		console.log("node=" + node.id())
+		nodeList = nodeList.union(node);
+	});
+	console.log("nodeList=" + nodeList.length)
+
+	result += nodesToTsv(nodeList, lockedNodeIds);
+ 
+
+	result += "\n"
+	result += edgesToTsv(cy.edges(":selected"));
 	return result;
 }
