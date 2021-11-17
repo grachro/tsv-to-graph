@@ -115,7 +115,11 @@ function readTsv(tsv) {
 
 	
 	cy.style(styleArray).update();
- 
+}
+
+
+function mergeTsv(tsv) {
+	alert('not implementation')
 }
 
 var getSvgUrl = function() {
@@ -260,7 +264,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		readTsv(tsv);
   });
 	
-
+	document.getElementById("tsv-merge-btn").addEventListener('click', event => {
+		const tsv = document.getElementById("import-tsv-textarea").value 
+		mergeTsv(tsv);
+  });
+	
 	document.getElementById("search-btn").addEventListener('click', event => {
 		const srachText = document.getElementById("search-input").value 
 		cy.elements().unselect()
