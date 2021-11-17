@@ -53,12 +53,10 @@ export function loadTsv(tsv, guardStyleSelections) {
 	const unregisteredNodeIds  = new Set();
 	for (const edge of edges) {
 		if(!_tsvNodeIds.has(edge.data.source)) {
-			console.log("add source:" + edge.data.source);
 			unregisteredNodeIds.add(edge.data.source);
 		}
 
 		if(!_tsvNodeIds.has(edge.data.target)) {
-			console.log("add target:" + edge.data.target);
 			unregisteredNodeIds.add(edge.data.target);
 		}
 	}

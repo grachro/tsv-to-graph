@@ -36,7 +36,6 @@ function refreshLayout(defaultLockNodePositions) {
 			const x = nodePosition.position.x;
 			const y = nodePosition.position.y;
 
-			console.log(id + ":" + x + "," + y);
 			lockNodesData.push({
 				nodeId:id,
 				position: {x:parseInt(x) , y:parseInt(y)}
@@ -127,11 +126,8 @@ function mergeTsv(tsv) {
 		const nodeId = nodeInfo.data.id;
 		const currentNode = cy.getElementById(nodeId);
 
-		const d = currentNode.data();
-		console.log("currentNode=" + d);
 		if(currentNode.data()) {
 			currentNode.data("label", nodeInfo.data.label);
-
 			currentNode.data("parent", nodeInfo.data.parent);
 
 			if(lockedNodeIds.has(nodeId)) {
@@ -143,21 +139,11 @@ function mergeTsv(tsv) {
 			currentNode.move({parent:newParent})
 
 		} else {
-
-			console.log("nodeInfo=" + nodeInfo);
 			cy.add(nodeInfo);
 		}
 	}
 
-	
-
-	// cy.json({ 
-	// 	elements: {
-	// 		nodes:newElementsAndLockNodes.nodes,
-	// 		edges:newElementsAndLockNodes.edges
-	// 	} 
-	// });
-
+	//TODO newElementsAndLockNodes.edges
 }
 
 var getSvgUrl = function() {
@@ -206,10 +192,6 @@ const unlockNodePosition = function _unlockNodePosition(targetNode) {
 
 const selectFirstNeighborhood = function _selectFirstNeighborhood(targetNode) {
 	const nodes = targetNode.edgesWith('*').connectedNodes();
-	for (const c of nodes) {
-		console.log(c.id())
-	}
-
 	nodes.select();
 }
 
