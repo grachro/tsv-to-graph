@@ -77,7 +77,7 @@ function createNode(lockNodes, array) {
 	const id = array[1];
 	const label = array[2];
 	const nodeType = array.length >= 4 ? array[3] : null;
-	const parent = array.length >= 5 ? array[4] : null;
+	const parent = array.length >= 5 ? (array[4] ? array[4]: null) : null;
 	const x = array.length >= 6 ? array[5] : null;
 	const y = array.length >= 7 ? array[6] : null;
 
