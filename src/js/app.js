@@ -129,11 +129,17 @@ function mergeTsv(tsv) {
 		if(currentNode) {
 			currentNode.data("label", nodeInfo.data.label);
 
+			currentNode.data("parent", nodeInfo.data.parent);
+
 			if(lockedNodeIds.has(nodeId)) {
 			 	nodeInfo.classes.push('__position-locked__');
 			}
 			currentNode.classes(nodeInfo.classes);
-			//currentNode.parent = nodeInfo.parent;
+
+			const newParent = nodeInfo.data.parent;
+			console.log("newParent=" + newParent);
+			currentNode.move({parent:newParent})
+
 		} else {
 			cy.add(nodeInfo);
 		}

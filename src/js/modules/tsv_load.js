@@ -89,10 +89,8 @@ function createNode(lockNodes, array) {
 	}
 	newElm["classes"] = classArray;
 	
-	if(parent) {
-		newElm.data["parent"] = parent;
-	}
-
+	newElm.data["parent"] = parent;
+	
 	if(x && y) {
 		lockNodes.push({
 			nodeId:id,
