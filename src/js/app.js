@@ -67,9 +67,11 @@ function readTsv(tsv) {
 	const newElementsAndLockNodes = loadTsv(tsv);
 
 	cy.elements().remove();
-	cy.json({ elements: {
-		nodes:newElementsAndLockNodes.nodes,
-		edges:newElementsAndLockNodes.edges} 
+	cy.json({ 
+		elements: {
+			nodes:newElementsAndLockNodes.nodes,
+			edges:newElementsAndLockNodes.edges
+		} 
 	});
 
 	lockedNodeIds.clear();
@@ -119,7 +121,33 @@ function readTsv(tsv) {
 
 
 function mergeTsv(tsv) {
-	alert('not implementation')
+	const newElementsAndLockNodes = loadTsv(tsv);
+
+	for(const nodeInfo of newElementsAndLockNodes.nodes) {
+		const nodeId = nodeInfo.data.id;
+		const currentNode = cy.getElementById(nodeId);
+		if(currentNode) {
+			currentNode.data("label", nodeInfo.data.label);
+
+			if(lockedNodeIds.has(nodeId)) {
+			 	nodeInfo.classes.push('__position-locked__');
+			}
+			currentNode.classes(nodeInfo.classes);
+			//currentNode.parent = nodeInfo.parent;
+		} else {
+			cy.add(nodeInfo);
+		}
+	}
+
+	
+
+	// cy.json({ 
+	// 	elements: {
+	// 		nodes:newElementsAndLockNodes.nodes,
+	// 		edges:newElementsAndLockNodes.edges
+	// 	} 
+	// });
+
 }
 
 var getSvgUrl = function() {

@@ -45,9 +45,9 @@ export function loadTsv(tsv, guardStyleSelections) {
 		}
 	}
 
-	for (const _tsvNodeId of _tsvNodeIds) {
-		console.log("_tsvNodeId:" + _tsvNodeId);
-	}
+	// for (const _tsvNodeId of _tsvNodeIds) {
+	// 	console.log("_tsvNodeId:" + _tsvNodeId);
+	// }
 
 	//edgeで使用されているが明示的にnode指定されていないNodeIdを補完
 	const unregisteredNodeIds  = new Set();
