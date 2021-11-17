@@ -18,7 +18,7 @@ h1 {
 
 #top-tsv-span {
 	position: absolute;
-	left: 320px;
+	left: 323px;
 	bottom: 1px;
 }
 
@@ -32,8 +32,12 @@ h1 {
 	position: absolute;
 	top: 50px;
 	bottom: 0;
-	width: 375px; 
+	width: 375px;
 	background-color: #eee;
+}
+
+#side-panel_contents {
+	padding: 5px 0 5px 5px;
 }
 
 #cy {
@@ -45,8 +49,8 @@ h1 {
 	z-index: 999;
 }
 
-#refresh-btn {
+#top-left-panel {
 	position: absolute;
 	right: 0;
-	bottom: 0;
+	bottom: 5px;
 }

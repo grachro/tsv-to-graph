@@ -36,7 +36,6 @@ function refreshLayout(defaultLockNodePositions) {
 			const x = nodePosition.position.x;
 			const y = nodePosition.position.y;
 
-			console.log(id + ":" + x + "," + y);
 			lockNodesData.push({
 				nodeId:id,
 				position: {x:parseInt(x) , y:parseInt(y)}
@@ -67,9 +66,11 @@ function readTsv(tsv) {
 	const newElementsAndLockNodes = loadTsv(tsv);
 
 	cy.elements().remove();
-	cy.json({ elements: {
-		nodes:newElementsAndLockNodes.nodes,
-		edges:newElementsAndLockNodes.edges} 
+	cy.json({ 
+		elements: {
+			nodes:newElementsAndLockNodes.nodes,
+			edges:newElementsAndLockNodes.edges
+		} 
 	});
 
 	lockedNodeIds.clear();
@@ -115,7 +116,34 @@ function readTsv(tsv) {
 
 	
 	cy.style(styleArray).update();
- 
+}
+
+
+function mergeTsv(tsv) {
+	const newElementsAndLockNodes = loadTsv(tsv);
+
+	for(const nodeInfo of newElementsAndLockNodes.nodes) {
+		const nodeId = nodeInfo.data.id;
+		const currentNode = cy.getElementById(nodeId);
+
+		if(currentNode.data()) {
+			currentNode.data("label", nodeInfo.data.label);
+			currentNode.data("parent", nodeInfo.data.parent);
+
+			if(lockedNodeIds.has(nodeId)) {
+			 	nodeInfo.classes.push('__position-locked__');
+			}
+			currentNode.classes(nodeInfo.classes);
+
+			const newParent = nodeInfo.data.parent;
+			currentNode.move({parent:newParent})
+
+		} else {
+			cy.add(nodeInfo);
+		}
+	}
+
+	//TODO newElementsAndLockNodes.edges
 }
 
 var getSvgUrl = function() {
@@ -164,10 +192,6 @@ const unlockNodePosition = function _unlockNodePosition(targetNode) {
 
 const selectFirstNeighborhood = function _selectFirstNeighborhood(targetNode) {
 	const nodes = targetNode.edgesWith('*').connectedNodes();
-	for (const c of nodes) {
-		console.log(c.id())
-	}
-
 	nodes.select();
 }
 
@@ -248,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 
-	document.getElementById("svg-btn").addEventListener('click', event => {
+	document.getElementById("export-svg-btn").addEventListener('click', event => {
 		var aTag = document.createElement('a');
 		aTag.setAttribute('href', getSvgUrl());
 		aTag.setAttribute('download', 'graph.svg');
@@ -260,7 +284,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		readTsv(tsv);
   });
 	
-
+	document.getElementById("tsv-merge-btn").addEventListener('click', event => {
+		const tsv = document.getElementById("import-tsv-textarea").value 
+		mergeTsv(tsv);
+  });
+	
 	document.getElementById("search-btn").addEventListener('click', event => {
 		const srachText = document.getElementById("search-input").value 
 		cy.elements().unselect()

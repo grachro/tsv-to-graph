@@ -45,20 +45,18 @@ export function loadTsv(tsv, guardStyleSelections) {
 		}
 	}
 
-	for (const _tsvNodeId of _tsvNodeIds) {
-		console.log("_tsvNodeId:" + _tsvNodeId);
-	}
+	// for (const _tsvNodeId of _tsvNodeIds) {
+	// 	console.log("_tsvNodeId:" + _tsvNodeId);
+	// }
 
 	//edgeで使用されているが明示的にnode指定されていないNodeIdを補完
 	const unregisteredNodeIds  = new Set();
 	for (const edge of edges) {
 		if(!_tsvNodeIds.has(edge.data.source)) {
-			console.log("add source:" + edge.data.source);
 			unregisteredNodeIds.add(edge.data.source);
 		}
 
 		if(!_tsvNodeIds.has(edge.data.target)) {
-			console.log("add target:" + edge.data.target);
 			unregisteredNodeIds.add(edge.data.target);
 		}
 	}
@@ -77,7 +75,7 @@ function createNode(lockNodes, array) {
 	const id = array[1];
 	const label = array[2];
 	const nodeType = array.length >= 4 ? array[3] : null;
-	const parent = array.length >= 5 ? array[4] : null;
+	const parent = array.length >= 5 ? (array[4] ? array[4]: null) : null;
 	const x = array.length >= 6 ? array[5] : null;
 	const y = array.length >= 7 ? array[6] : null;
 
@@ -89,10 +87,8 @@ function createNode(lockNodes, array) {
 	}
 	newElm["classes"] = classArray;
 	
-	if(parent) {
-		newElm.data["parent"] = parent;
-	}
-
+	newElm.data["parent"] = parent;
+	
 	if(x && y) {
 		lockNodes.push({
 			nodeId:id,
