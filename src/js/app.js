@@ -126,7 +126,10 @@ function mergeTsv(tsv) {
 	for(const nodeInfo of newElementsAndLockNodes.nodes) {
 		const nodeId = nodeInfo.data.id;
 		const currentNode = cy.getElementById(nodeId);
-		if(currentNode) {
+
+		const d = currentNode.data();
+		console.log("currentNode=" + d);
+		if(currentNode.data()) {
 			currentNode.data("label", nodeInfo.data.label);
 
 			currentNode.data("parent", nodeInfo.data.parent);
@@ -137,10 +140,11 @@ function mergeTsv(tsv) {
 			currentNode.classes(nodeInfo.classes);
 
 			const newParent = nodeInfo.data.parent;
-			console.log("newParent=" + newParent);
 			currentNode.move({parent:newParent})
 
 		} else {
+
+			console.log("nodeInfo=" + nodeInfo);
 			cy.add(nodeInfo);
 		}
 	}
