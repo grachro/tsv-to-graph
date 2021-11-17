@@ -1,0 +1,65 @@
+#type	nodeId	label	nodeType	parentNodeId	x	y
+#====
+node	svg export error	svg export error	error			
+node	svg export ok	svg export ok	ok			
+node	ellipse	ellipse	ellipse	svg export ok		
+node	triangle	triangle	triangle	svg export ok		
+node	rectangle	rectangle	rectangle	svg export ok		
+node	round-rectangle	round-rectangle	round-rectangle	svg export ok		
+node	bottom-round-rectangle	bottom-round-rectangle	bottom-round-rectangle	svg export ok		
+node	cut-rectangle	cut-rectangle	cut-rectangle	svg export ok		
+node	barrel	barrel	barrel	svg export ok		
+node	rhomboid	rhomboid	rhomboid	svg export ok		
+node	diamond	diamond	diamond	svg export ok		
+node	pentagon	pentagon	pentagon	svg export ok		
+node	hexagon	hexagon	hexagon	svg export ok		
+node	concave-hexagon	concave-hexagon	concave-hexagon	svg export ok		
+node	heptagon	heptagon	heptagon	svg export ok		
+node	octagon	octagon	octagon	svg export ok		
+node	star	star	star	svg export ok		
+node	tag	tag	tag	svg export ok		
+node	round-tag	round-tag	round-tag	svg export ok		
+node	vee	vee	vee	svg export ok		
+node	round-triangle	round-triangle	round-triangle	svg export error		
+node	round-diamond	round-diamond	round-diamond	svg export error		
+node	round-pentagon	round-pentagon	round-pentagon	svg export error		
+node	round-hexagon	round-hexagon	round-hexagon	svg export error		
+node	round-heptagon	round-heptagon	round-heptagon	svg export error		
+node	round-octagon	round-octagon	round-octagon	svg export error		
+
+#type	sourceNodeId	targetNodeId
+#====
+#empty edges
+
+#type	selector	background-color	shape
+#====
+node-style	node.ellipse		ellipse
+node-style	node.triangle		triangle
+node-style	node.round-triangle		round-triangle
+node-style	node.rectangle		rectangle
+node-style	node.round-rectangle		round-rectangle
+node-style	node.bottom-round-rectangle		bottom-round-rectangle
+node-style	node.cut-rectangle		cut-rectangle
+node-style	node.barrel		barrel
+node-style	node.rhomboid		rhomboid
+node-style	node.diamond		diamond
+node-style	node.round-diamond		round-diamond
+node-style	node.pentagon		pentagon
+node-style	node.round-pentagon		round-pentagon
+node-style	node.hexagon		hexagon
+node-style	node.round-hexagon		round-hexagon
+node-style	node.concave-hexagon		concave-hexagon
+node-style	node.heptagon		heptagon
+node-style	node.round-heptagon		round-heptagon
+node-style	node.octagon		octagon
+node-style	node.round-octagon		round-octagon
+node-style	node.star		star
+node-style	node.tag		tag
+node-style	node.round-tag		round-tag
+node-style	node.vee		vee
+node-style	node.error	rgb(255,132,193)	
+node-style	node.ok	rgb(132,193,255)	
+
+#type	selector	line-color	line-style
+#====
+#empty edge-styles

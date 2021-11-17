@@ -4,14 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
-  <title>Graph Stracture Viewer</title>
+  <title>tsv-to-graph</title>
   <link rel="stylesheet" type="text/css"  href="css/cytoscape-context-menus.css" />     
   <link rel="stylesheet" type="text/css"  href="css/app.css" />     
 </head>
 
 <body>
   <div id='top-panel'>
-    <h1>Graph Stracture Viewer</h1>
+    <h1>tsv-to-graph</h1>
+    <span id="top-tsv-span">tsv --&gt;|</span><span id="top-graph-span">&lt;-- graph</span>
     <button id="refresh-btn">refresh</button>
   </div>
   
@@ -33,7 +34,7 @@
     <br>
     <br>
     export tsv<br>
-    <textarea id="export-tsv-textarea" cols="30" rows="2" style="width: 350px;max-width: 350px;"></textarea>
+    <textarea id="export-tsv-textarea" cols="30" rows="8" style="width: 350px;max-width: 350px;"></textarea>
     <br>
     <br>
     selected node: 

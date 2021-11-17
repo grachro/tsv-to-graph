@@ -183,11 +183,6 @@ const deleteNodes = function _deleteNodes(targetNode) {
 	nodeList.remove();
 }
 
-function updateLockedNodePosition(node) { 
-	//refreshLayout();
-}
-
-
 let download = function(fileName, text) {
 	var aTag = document.createElement('a');
 	aTag.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -233,12 +228,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		download("meta.json", json);
   });
 
-	cy.on('tapend', 'node.__position-locked__' , function(evt){
-		var node = evt.target;
-		updateLockedNodePosition(node);
-	});
+	//cy.on('tapend', 'node.__position-locked__' , function(evt){
+	//	var node = evt.target;
+	//});
 
-	cy.on('tapend', function(evt){
+	cy.on('click', function(evt){
 		const span = document.getElementById("selected-node-span")
 		const elm = utils.getElmFromEvent(cy, evt); 
 		if(elm) {

@@ -42,5 +42,8 @@ export function getDefaultStyle() {
 		'curve-style': 'bezier',
 	});
 
+	map.set('edge:selected', {
+		'line-color': '#ff0a0a',
+	});
 	return map;
 }
