@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 
-	document.getElementById("svg-btn").addEventListener('click', event => {
+	document.getElementById("export-svg-btn").addEventListener('click', event => {
 		var aTag = document.createElement('a');
 		aTag.setAttribute('href', getSvgUrl());
 		aTag.setAttribute('download', 'graph.svg');
