@@ -143,7 +143,17 @@ function mergeTsv(tsv) {
 		}
 	}
 
-	//TODO newElementsAndLockNodes.edges
+	for(const edgeInfo of newElementsAndLockNodes.edges) {
+		const edgeId = edgeInfo.data.id;
+	
+		const currentEdge = cy.getElementById(edgeId);
+		if(currentEdge.data()) {
+			const classes = edgeInfo.classes;
+			currentEdge.classes(classes);
+		} else {
+			cy.add(edgeInfo);
+		}
+	}
 }
 
 var getSvgUrl = function() {
