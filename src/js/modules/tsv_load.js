@@ -1,4 +1,4 @@
-export function loadTsv(tsv, guardStyleSelections) {
+export function loadTsv(tsv) {
 	const nodes = [];
 	const edges = [];
 	const lockNodes = [];

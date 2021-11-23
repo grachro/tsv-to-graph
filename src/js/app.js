@@ -216,7 +216,7 @@ let download = function(fileName, text) {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
+export function appInit() {
   cy = cytoscape({
     container: document.getElementById("cy")
   });
@@ -297,5 +297,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
  
 	readTsv(sampleData);
-});
+};
 
