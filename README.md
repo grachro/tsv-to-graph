@@ -1,4 +1,28 @@
-# graph-structured-viewer
+# tsv-to-graph 
+
+## Project setup
+```
+yarn install
+```
+
+### Compiles and hot-reloads for development
+```
+yarn serve
+```
+
+### Compiles and minifies for production
+```
+yarn build
+```
+
+### Lints and fixes files
+```
+yarn lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
 
 ## project info
 
@@ -23,5 +47,3 @@ npm install cytoscape-fcose
 npm install cytoscape-context-menus
 npm install cytoscape-svg
 ```
-
-
