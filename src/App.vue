@@ -57,4 +57,60 @@ export default {
 </script>
 
 <style>
+body {
+	padding: 0;
+	margin: 0;
+
+}
+h1 {
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
+}
+#top-panel {
+	position: absolute;
+	height: 50px;
+	background-color: #ddd;
+	left: 0;
+	right: 0;
+}
+
+#top-tsv-span {
+	position: absolute;
+	left: 323px;
+	bottom: 1px;
+}
+
+#top-graph-span {
+	position: absolute;
+	left: 375px;
+	bottom: 1px;
+}
+
+#side-panel {
+	position: absolute;
+	top: 50px;
+	bottom: 0;
+	width: 375px;
+	background-color: #eee;
+}
+
+#side-panel_contents {
+	padding: 5px 0 5px 5px;
+}
+
+#cy {
+	position: absolute;
+	left: 375px;
+	top: 50px;
+	bottom: 0;
+	right: 0;
+	z-index: 999;
+}
+
+#top-left-panel {
+	position: absolute;
+	right: 0;
+	bottom: 5px;
+}
 </style>
