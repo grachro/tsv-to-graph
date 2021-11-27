@@ -1,5 +1,14 @@
 # tsv-to-graph 
 
+## 起動方法
+```
+git clone git@github.com:grachro/tsv-to-graph.git
+cd tsv-to-graph/release
+docker run --rm -p 80:80 -v $(pwd):/usr/share/nginx/html:ro nginx
+```
+ブラウザで http://localhost にアクセス
+
+
 ## Project setup
 ```
 yarn install
