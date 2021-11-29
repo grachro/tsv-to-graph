@@ -38,10 +38,12 @@ node-style	node.TypeA	#7fbfff
 node-style	node.TypeB		round-octagon
 node-style	node.TypeC	#ff7f7f	ellipse
 
-#type	selector	line-color	line-style
-#====
-edge-style	edge.TypeO	#bf7fff	solid
-edge-style	edge.TypeP		dotted
-edge-style	edge.TypeQ	#ffbf7f
-edge-style	edge.TypeR	#ffbf7f	dashed
+#type	selector	line-color	line-style	curve-style	target-arrow-shape
+#====					
+edge-style	edge			bezier	triangle
+edge-style	edge.TypeO	rgb(191,127,255)	solid		
+edge-style	edge.TypeP		dotted		
+edge-style	edge.TypeQ	rgb(255,191,127)			
+edge-style	edge.TypeR	rgb(255,191,127)	dashed		
+edge-style	edge:selected	#ff0a0a			
 `;

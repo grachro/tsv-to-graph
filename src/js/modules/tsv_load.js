@@ -24,7 +24,6 @@ export function loadTsv(tsv) {
 			const selector = array[1];
 			const backgroundColor = array.length >= 3 ? array[2] : null;
 			const shape = array.length >= 4 ? array[3] : null;
-
 			const label = array.length >= 5 ? array[4] : null;
 			const	padding = array.length >= 6 ? array[5] : null;
 			const	width = array.length >= 7 ? array[6] : null;
@@ -35,7 +34,6 @@ export function loadTsv(tsv) {
 			const	border_color = array.length >= 12 ? array[11] : null;
 			const	border_style = array.length >= 13 ? array[12] : null;
 			const	border_width = array.length >= 14 ? array[13] : null;
-
 
 			nodeStyles.push({
 				selector: selector, 
@@ -57,10 +55,14 @@ export function loadTsv(tsv) {
 			const selector = array[1];
 			const lineColor = array.length >= 3 ? array[2] : null;
 			const lineStyle = array.length >= 4 ? array[3] : null;
+			const curveStyle = array.length >= 5 ? array[4] : null;
+			const targetArrowShape = array.length >= 6 ? array[5] : null;
 			lineStyles.push({
 				selector: selector, 
 				lineColor: lineColor,
 				lineStyle: lineStyle,
+				curveStyle: curveStyle,
+				targetArrowShape: targetArrowShape,
 			});
 
 		} else {

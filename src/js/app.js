@@ -137,15 +137,26 @@ function readTsv(tsv) {
 		);
 	}
 	for (const lineStyle of newElementsAndLockNodes.lineStyles) {
+
+		const currentStyle = {};
+		if (lineStyle.lineColor) {
+			currentStyle['line-color'] = lineStyle.lineColor;
+			currentStyle['target-arrow-color'] = lineStyle.lineColor;
+		}
+		if (lineStyle.lineStyle) {
+			currentStyle['line-style'] = lineStyle.lineStyle;
+		}
+		if (lineStyle.curveStyle) {
+			currentStyle['curve-style'] = lineStyle.curveStyle;
+		}
+		if (lineStyle.targetArrowShape) {
+			currentStyle['target-arrow-shape'] = lineStyle.targetArrowShape;
+		}
+ 
 		styleArray.push(
 			{
 				selector: lineStyle.selector,
-				style: {
-					'line-color': lineStyle.lineColor,
-					'target-arrow-color': lineStyle.lineColor,
-					'line-style': lineStyle.lineStyle,
-
-				}
+				style: currentStyle
 			}
 		);
 	}
