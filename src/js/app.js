@@ -90,13 +90,49 @@ function readTsv(tsv) {
 		);
 	}
 	for (const nodeStyle of newElementsAndLockNodes.nodeStyles) {
+
+		const currentStyle = {};
+		if (nodeStyle.backgroundColor) {
+			currentStyle['background-color'] = nodeStyle.backgroundColor;
+		}
+		if (nodeStyle.shape) {
+			currentStyle['shape'] = nodeStyle.shape;
+		}
+		if (nodeStyle.label) {
+			currentStyle['label'] = nodeStyle.label;
+		}
+		if (nodeStyle.padding) {
+			currentStyle['padding'] = nodeStyle.padding;
+		}
+		if (nodeStyle.width) {
+			currentStyle['width'] = nodeStyle.width;
+		}
+		if (nodeStyle.height) {
+			currentStyle['height'] = nodeStyle.height;
+		}
+		if (nodeStyle.text_halign) {
+			currentStyle['text-halign'] = nodeStyle.text_halign;
+		}
+		if (nodeStyle.text_valign) {
+			currentStyle['text-valign'] = nodeStyle.text_valign;
+		}
+		if (nodeStyle.background_opacity) {
+			currentStyle['background-opacity'] = nodeStyle.background_opacity;
+		}
+		if (nodeStyle.border_color) {
+			currentStyle['border-color'] = nodeStyle.border_color;
+		}
+		if (nodeStyle.border_style) {
+			currentStyle['border-style'] = nodeStyle.border_style;
+		}
+		if (nodeStyle.border_width) {
+			currentStyle['border-width'] = nodeStyle.border_width;
+		}
+ 
 		styleArray.push(
 			{
 				selector: nodeStyle.selector,
-				style: {
-					'background-color': nodeStyle.backgroundColor,
-					'shape': nodeStyle.shape,
-				}
+				style: currentStyle
 			}
 		);
 	}

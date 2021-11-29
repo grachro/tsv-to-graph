@@ -22,12 +22,35 @@ export function loadTsv(tsv) {
 			edges.push(newEdge);
 		} else if(array[0] == 'node-style' && array.length >= 3) {
 			const selector = array[1];
-			const backgroundColor = array[2];
+			const backgroundColor = array.length >= 3 ? array[2] : null;
 			const shape = array.length >= 4 ? array[3] : null;
+
+			const label = array.length >= 5 ? array[4] : null;
+			const	padding = array.length >= 6 ? array[5] : null;
+			const	width = array.length >= 7 ? array[6] : null;
+			const	height = array.length >= 8 ? array[7] : null;
+			const	text_halign = array.length >= 9 ? array[8] : null;
+			const	text_valign = array.length >= 10 ? array[9] : null;
+			const	background_opacity = array.length >= 11 ? array[10] : null;
+			const	border_color = array.length >= 12 ? array[11] : null;
+			const	border_style = array.length >= 13 ? array[12] : null;
+			const	border_width = array.length >= 14 ? array[13] : null;
+
+
 			nodeStyles.push({
 				selector: selector, 
 				backgroundColor: backgroundColor,
 				shape: shape,
+				label:label,
+				padding:padding,
+				width:width,
+				height:height,
+				text_halign:text_halign,
+				text_valign:text_valign,
+				background_opacity:background_opacity,
+				border_color:border_color,
+				border_style:border_style,
+				border_width:border_width,
 			});
 
 		} else if(array[0] == 'edge-style' && array.length >= 2) {

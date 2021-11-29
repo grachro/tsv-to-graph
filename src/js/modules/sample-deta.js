@@ -27,8 +27,13 @@ edge	n6	n7	TypeQ
 edge	n11	n12	TypeR
 edge	n2	n12
 
-#type	selector	background-color	shape
-#====
+#type	selector	background-color	shape	label	padding	width	height	text-halign	text-valign	background-opacity	border-color	border-style	border-width
+#====													
+node-style	node	#ddd	round-rectangle	data(label)	10px	label	label	center	center				
+node-style	node.normalNode	#ff7f7f											
+node-style	node:parent	#7f7fff		data(label)	10px			center	top	0.1			
+node-style	node.__position-locked__										#000	solid	2px
+node-style	node:selected										#ff0a0a	solid	3px
 node-style	node.TypeA	#7fbfff	
 node-style	node.TypeB		round-octagon
 node-style	node.TypeC	#ff7f7f	ellipse
