@@ -18,16 +18,18 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 			const selector = sty.selector;
 			if(defaultStyleSelections.has(selector)) {
 				continue;
-			} else if(selector.startsWith("node.")) {
+			} else if(selector.startsWith("node")) {
 				nodeStyles.push(sty);
-			} else if(selector.startsWith("edge.")) {
+			} else if(selector.startsWith("edge")) {
 				edgeStyles.push(sty);
+			} else {
+				console.warn("skip selector::" + selector);
 			}
 		}
 	}
 
 	result += "\n"
-	const NODE_STYLE_HEAD = "#type\tselector\tbackground-color\tshape\n";
+	const NODE_STYLE_HEAD = "#type\tselector\tbackground-color\tshape\tlabel\tpadding\twidth\theight\ttext-halign\ttext-valign\tbackground-opacity\tborder-color\tborder-style\tborder-width\n";
 	result += NODE_STYLE_HEAD
 	result += BOADER
 	if (nodeStyles.length > 0) {
@@ -36,7 +38,31 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 			const backgroundColor = sty.style["background-color"] || "";
 			const shape = sty.style["shape"] || "";
 
-			let s = "node-style\t" + selector + "\t" +  backgroundColor + "\t" + shape;
+			const label = sty.style["label"] || "";
+			const padding = sty.style["padding"] || "";
+			const width = sty.style["width"] || "";
+			const height = sty.style["height"] || "";
+			const text_halign = sty.style["text-halign"] || "";
+			const text_valign = sty.style["text-valign"] || "";
+			const background_opacity = sty.style["background-opacity"] || "";
+			const border_color = sty.style["border-color"] || "";
+			const border_style = sty.style["border-style"] || "";
+			const border_width = sty.style["border-width"] || "";
+
+			let s = "node-style\t";
+			s += selector + "\t";
+			s += backgroundColor + "\t"
+			s += shape + "\t"
+			s += label + "\t"
+			s += padding + "\t"
+			s += width + "\t"
+			s += height + "\t"
+			s += text_halign + "\t"
+			s += text_valign + "\t"
+			s += background_opacity + "\t"
+			s += border_color + "\t"
+			s += border_style + "\t"
+			s += border_width + "\t"
 			result += s + "\n";
 		}
 
