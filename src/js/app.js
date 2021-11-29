@@ -3,7 +3,6 @@ import fcose from "cytoscape-fcose";
 import contextMenus from "cytoscape-context-menus";
 import svg from 'cytoscape-svg';
 import { sampleData } from "./modules/sample-deta";
-import { getDefaultStyle } from "./modules/graph-style";
 import { createMouseMenuItems } from "./modules/menuItems";
 import { loadTsv } from "./modules/tsv_load";
 import { editSaveTsv, editSeclectedTsv } from "./modules/tsv_save";
@@ -81,35 +80,74 @@ function readTsv(tsv) {
 	cy.style().resetToDefault().update();
 
 	const styleArray = [];
-	for (const [key, value] of getDefaultStyle().entries()) {
-		styleArray.push(
-			{
-				selector: key,
-				style: value
-			}
-		);
-	}
 	for (const nodeStyle of newElementsAndLockNodes.nodeStyles) {
+
+		const currentStyle = {};
+		if (nodeStyle.backgroundColor) {
+			currentStyle['background-color'] = nodeStyle.backgroundColor;
+		}
+		if (nodeStyle.shape) {
+			currentStyle['shape'] = nodeStyle.shape;
+		}
+		if (nodeStyle.label) {
+			currentStyle['label'] = nodeStyle.label;
+		}
+		if (nodeStyle.padding) {
+			currentStyle['padding'] = nodeStyle.padding;
+		}
+		if (nodeStyle.width) {
+			currentStyle['width'] = nodeStyle.width;
+		}
+		if (nodeStyle.height) {
+			currentStyle['height'] = nodeStyle.height;
+		}
+		if (nodeStyle.text_halign) {
+			currentStyle['text-halign'] = nodeStyle.text_halign;
+		}
+		if (nodeStyle.text_valign) {
+			currentStyle['text-valign'] = nodeStyle.text_valign;
+		}
+		if (nodeStyle.background_opacity) {
+			currentStyle['background-opacity'] = nodeStyle.background_opacity;
+		}
+		if (nodeStyle.border_color) {
+			currentStyle['border-color'] = nodeStyle.border_color;
+		}
+		if (nodeStyle.border_style) {
+			currentStyle['border-style'] = nodeStyle.border_style;
+		}
+		if (nodeStyle.border_width) {
+			currentStyle['border-width'] = nodeStyle.border_width;
+		}
+ 
 		styleArray.push(
 			{
 				selector: nodeStyle.selector,
-				style: {
-					'background-color': nodeStyle.backgroundColor,
-					'shape': nodeStyle.shape,
-				}
+				style: currentStyle
 			}
 		);
 	}
 	for (const lineStyle of newElementsAndLockNodes.lineStyles) {
+
+		const currentStyle = {};
+		if (lineStyle.lineColor) {
+			currentStyle['line-color'] = lineStyle.lineColor;
+			currentStyle['target-arrow-color'] = lineStyle.lineColor;
+		}
+		if (lineStyle.lineStyle) {
+			currentStyle['line-style'] = lineStyle.lineStyle;
+		}
+		if (lineStyle.curveStyle) {
+			currentStyle['curve-style'] = lineStyle.curveStyle;
+		}
+		if (lineStyle.targetArrowShape) {
+			currentStyle['target-arrow-shape'] = lineStyle.targetArrowShape;
+		}
+ 
 		styleArray.push(
 			{
 				selector: lineStyle.selector,
-				style: {
-					'line-color': lineStyle.lineColor,
-					'target-arrow-color': lineStyle.lineColor,
-					'line-style': lineStyle.lineStyle,
-
-				}
+				style: currentStyle
 			}
 		);
 	}
@@ -250,10 +288,7 @@ export function appInit() {
 	});
 
 	document.getElementById("export-btn").addEventListener('click', () => {
-		const arr = Array.from(getDefaultStyle().keys());
-		var defaultStyleSelections = new Set(arr);
-
-		const tsv = editSaveTsv(cy, lockedNodeIds, defaultStyleSelections);
+		const tsv = editSaveTsv(cy, lockedNodeIds);
 		download("graph.tsv", tsv);
 	});
 

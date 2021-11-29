@@ -1,7 +1,7 @@
 
 const BOADER = "#====\n";
 
-export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
+export function editSaveTsv(cy, lockedNodeIds) {
  
 	const cyJson = cy.json();
 
@@ -16,18 +16,18 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 	if (cyJson.style) {
 		for (const sty of cyJson.style) {
 			const selector = sty.selector;
-			if(defaultStyleSelections.has(selector)) {
-				continue;
-			} else if(selector.startsWith("node.")) {
+			if(selector.startsWith("node")) {
 				nodeStyles.push(sty);
-			} else if(selector.startsWith("edge.")) {
+			} else if(selector.startsWith("edge")) {
 				edgeStyles.push(sty);
+			} else {
+				console.warn("skip selector::" + selector);
 			}
 		}
 	}
 
 	result += "\n"
-	const NODE_STYLE_HEAD = "#type\tselector\tbackground-color\tshape\n";
+	const NODE_STYLE_HEAD = "#type\tselector\tbackground-color\tshape\tlabel\tpadding\twidth\theight\ttext-halign\ttext-valign\tbackground-opacity\tborder-color\tborder-style\tborder-width\n";
 	result += NODE_STYLE_HEAD
 	result += BOADER
 	if (nodeStyles.length > 0) {
@@ -36,8 +36,32 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 			const backgroundColor = sty.style["background-color"] || "";
 			const shape = sty.style["shape"] || "";
 
-			let s = "node-style\t" + selector + "\t" +  backgroundColor + "\t" + shape;
-			result += s + "\n";
+			const label = sty.style["label"] || "";
+			const padding = sty.style["padding"] || "";
+			const width = sty.style["width"] || "";
+			const height = sty.style["height"] || "";
+			const text_halign = sty.style["text-halign"] || "";
+			const text_valign = sty.style["text-valign"] || "";
+			const background_opacity = sty.style["background-opacity"] || "";
+			const border_color = sty.style["border-color"] || "";
+			const border_style = sty.style["border-style"] || "";
+			const border_width = sty.style["border-width"] || "";
+
+			let s = "node-style\t";
+			s += selector + "\t";
+			s += backgroundColor + "\t"
+			s += shape + "\t"
+			s += label + "\t"
+			s += padding + "\t"
+			s += width + "\t"
+			s += height + "\t"
+			s += text_halign + "\t"
+			s += text_valign + "\t"
+			s += background_opacity + "\t"
+			s += border_color + "\t"
+			s += border_style + "\t"
+			s += border_width + "\n"
+			result += s;
 		}
 
 	} else {
@@ -45,7 +69,7 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 	}
 
 	result += "\n"
-	const EDGE_STYLE_HEAD = "#type\tselector\tline-color\tline-style\n";
+	const EDGE_STYLE_HEAD = "#type\tselector\tline-color\tline-style\tcurve-style\ttarget-arrow-shape\n";
 	result += EDGE_STYLE_HEAD
 	result += BOADER
 	if (edgeStyles.length > 0) {
@@ -53,9 +77,16 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 			const selector = sty.selector;
 			const lineColor = sty.style["line-color"] || "";
 			const lineStyle = sty.style["line-style"] || "";
+			const curveStyle = sty.style["curve-style"] || "";
+			const targetArrowShape = sty.style["target-arrow-shape"] || "";
 
-			let s = "edge-style\t" + selector + "\t" +  lineColor + "\t" + lineStyle;
-			result += s + "\n";
+			let s = "edge-style\t" 
+			s += selector + "\t"
+			s += lineColor + "\t"
+			s += lineStyle + "\t"
+			s += curveStyle + "\t"
+			s += targetArrowShape + "\n"
+			result += s;
 		}
 
 	} else {
