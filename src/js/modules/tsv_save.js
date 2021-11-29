@@ -1,7 +1,7 @@
 
 const BOADER = "#====\n";
 
-export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
+export function editSaveTsv(cy, lockedNodeIds) {
  
 	const cyJson = cy.json();
 
@@ -16,9 +16,7 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 	if (cyJson.style) {
 		for (const sty of cyJson.style) {
 			const selector = sty.selector;
-			if(defaultStyleSelections.has(selector)) {
-				continue;
-			} else if(selector.startsWith("node")) {
+			if(selector.startsWith("node")) {
 				nodeStyles.push(sty);
 			} else if(selector.startsWith("edge")) {
 				edgeStyles.push(sty);

@@ -3,7 +3,6 @@ import fcose from "cytoscape-fcose";
 import contextMenus from "cytoscape-context-menus";
 import svg from 'cytoscape-svg';
 import { sampleData } from "./modules/sample-deta";
-import { getDefaultStyle } from "./modules/graph-style";
 import { createMouseMenuItems } from "./modules/menuItems";
 import { loadTsv } from "./modules/tsv_load";
 import { editSaveTsv, editSeclectedTsv } from "./modules/tsv_save";
@@ -81,14 +80,6 @@ function readTsv(tsv) {
 	cy.style().resetToDefault().update();
 
 	const styleArray = [];
-	for (const [key, value] of getDefaultStyle().entries()) {
-		styleArray.push(
-			{
-				selector: key,
-				style: value
-			}
-		);
-	}
 	for (const nodeStyle of newElementsAndLockNodes.nodeStyles) {
 
 		const currentStyle = {};
@@ -297,10 +288,7 @@ export function appInit() {
 	});
 
 	document.getElementById("export-btn").addEventListener('click', () => {
-		const arr = Array.from(getDefaultStyle().keys());
-		var defaultStyleSelections = new Set(arr);
-
-		const tsv = editSaveTsv(cy, lockedNodeIds, defaultStyleSelections);
+		const tsv = editSaveTsv(cy, lockedNodeIds);
 		download("graph.tsv", tsv);
 	});
 
