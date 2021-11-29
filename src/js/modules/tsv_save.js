@@ -62,8 +62,8 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 			s += background_opacity + "\t"
 			s += border_color + "\t"
 			s += border_style + "\t"
-			s += border_width + "\t"
-			result += s + "\n";
+			s += border_width + "\n"
+			result += s;
 		}
 
 	} else {
@@ -71,7 +71,7 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 	}
 
 	result += "\n"
-	const EDGE_STYLE_HEAD = "#type\tselector\tline-color\tline-style\n";
+	const EDGE_STYLE_HEAD = "#type\tselector\tline-color\tline-style\tcurve-style\ttarget-arrow-shape\n";
 	result += EDGE_STYLE_HEAD
 	result += BOADER
 	if (edgeStyles.length > 0) {
@@ -79,9 +79,16 @@ export function editSaveTsv(cy, lockedNodeIds, defaultStyleSelections) {
 			const selector = sty.selector;
 			const lineColor = sty.style["line-color"] || "";
 			const lineStyle = sty.style["line-style"] || "";
+			const curveStyle = sty.style["curve-style"] || "";
+			const targetArrowShape = sty.style["target-arrow-shape"] || "";
 
-			let s = "edge-style\t" + selector + "\t" +  lineColor + "\t" + lineStyle;
-			result += s + "\n";
+			let s = "edge-style\t" 
+			s += selector + "\t"
+			s += lineColor + "\t"
+			s += lineStyle + "\t"
+			s += curveStyle + "\t"
+			s += targetArrowShape + "\n"
+			result += s;
 		}
 
 	} else {
