@@ -3,8 +3,13 @@
     <h1>tsv-to-graph</h1>
     <span id="top-tsv-span">tsv --&gt;|</span><span id="top-graph-span">&lt;-- graph</span>
     <id id='top-left-panel'>
-      <input id="search-input"><button id="search-btn">find by id</button> 
-      <button id="refresh-btn">refresh</button>
+      <input id="search-input"><button id="search-btn">find by id</button>
+      <span style="display: inline-block;width: 10px;" />
+      <span>pan&zoom</span>
+      <button id="pan-zoom-fit-btn">fit</button>
+      <button id="pan-zoom-reset-btn">100%</button>
+      <span style="display: inline-block;width: 10px;" />
+      <button id="refresh-btn">refresh layout</button>
     </id>
   </div>
   

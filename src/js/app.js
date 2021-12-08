@@ -2,7 +2,7 @@ import cytoscape from "cytoscape";
 import fcose from "cytoscape-fcose";
 import contextMenus from "cytoscape-context-menus";
 import svg from 'cytoscape-svg';
-import { sampleData } from "./modules/sample-deta";
+import { sampleNodesAndEdges, sampleStyles } from "./modules/sample-deta";
 import { createMouseMenuItems } from "./modules/menuItems";
 import { loadTsv } from "./modules/tsv_load";
 import { editSaveTsv, editSeclectedTsv } from "./modules/tsv_save";
@@ -63,6 +63,7 @@ function refreshLayout(defaultLockNodePositions) {
 
 function readTsv(tsv) {
 	const newElementsAndLockNodes = loadTsv(tsv);
+	const sampleStylesData = loadTsv(sampleStyles);
 
 	cy.elements().remove();
 	cy.json({
@@ -80,7 +81,11 @@ function readTsv(tsv) {
 	cy.style().resetToDefault().update();
 
 	const styleArray = [];
-	for (const nodeStyle of newElementsAndLockNodes.nodeStyles) {
+	let nStyles = newElementsAndLockNodes.nodeStyles;
+	if (nStyles.length == 0) {
+		nStyles = sampleStylesData.nodeStyles;
+	}
+	for (const nodeStyle of nStyles) {
 
 		const currentStyle = {};
 		if (nodeStyle.backgroundColor) {
@@ -127,7 +132,13 @@ function readTsv(tsv) {
 			}
 		);
 	}
-	for (const lineStyle of newElementsAndLockNodes.lineStyles) {
+
+
+	let lStyles = newElementsAndLockNodes.lineStyles;
+	if (lStyles.length == 0) {
+		lStyles = sampleStylesData.lineStyles;
+	}
+	for (const lineStyle of lStyles) {
 
 		const currentStyle = {};
 		if (lineStyle.lineColor) {
@@ -262,8 +273,6 @@ let download = function (fileName, text) {
 	aTag.click();
 };
 
-
-
 export function appInit() {
 	cy = cytoscape({
 		container: document.getElementById("cy")
@@ -271,6 +280,15 @@ export function appInit() {
 
 	var contextMenu = cy.contextMenus();
 	contextMenu.appendMenuItems(createMouseMenuItems(lockNodePosition, unlockNodePosition, selectFirstNeighborhood, deleteNodes));
+
+	document.getElementById("pan-zoom-fit-btn").addEventListener('click', () => {
+		cy.fit();
+	});
+
+	document.getElementById("pan-zoom-reset-btn").addEventListener('click', () => {
+		cy.reset();
+	});
+
 
 	document.getElementById("refresh-btn").addEventListener('click', () => {
 		refreshLayout();
@@ -341,6 +359,6 @@ export function appInit() {
 	});
 
 
-	readTsv(sampleData);
+	readTsv(sampleNodesAndEdges + sampleStyles);
 }
 

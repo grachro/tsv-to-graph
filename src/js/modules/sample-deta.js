@@ -1,4 +1,4 @@
-export const sampleData = `#type	id	label	nodeType	parent	x	y
+export const sampleNodesAndEdges = `#type	id	label	nodeType	parent	x	y
 #====
 node	n1	node 1	TypeA			
 node	n2	node 2	TypeA			
@@ -27,6 +27,9 @@ edge	n6	n7	TypeQ
 edge	n11	n12	TypeR
 edge	n2	n12
 
+`;
+
+export const sampleStyles = `
 #type	selector	background-color	shape	label	padding	width	height	text-halign	text-valign	background-opacity	border-color	border-style	border-width
 #====													
 node-style	node	#ddd	round-rectangle	data(label)	10px	label	label	center	center				
