@@ -61,7 +61,7 @@ function refreshLayout(defaultLockNodePositions) {
 
 }
 
-function readTsv(tsv) {
+export function readTsv(tsv) {
 	const newElementsAndLockNodes = loadTsv(tsv);
 	const sampleStylesData = loadTsv(sampleStyles);
 
@@ -167,6 +167,10 @@ function readTsv(tsv) {
 	cy.style(styleArray).update();
 }
 
+export function exportTsv(tsvFileName) {
+	const tsv = editSaveTsv(cy, lockedNodeIds);
+	download(tsvFileName, tsv);
+}
 
 function mergeTsv(tsv) {
 	const newElementsAndLockNodes = loadTsv(tsv);
@@ -203,6 +207,13 @@ function mergeTsv(tsv) {
 			cy.add(edgeInfo);
 		}
 	}
+}
+
+export function exportSvg(svgFileName) {
+	var aTag = document.createElement('a');
+	aTag.setAttribute('href', getSvgUrl());
+	aTag.setAttribute('download', svgFileName);
+	aTag.click();
 }
 
 var getSvgUrl = function () {
@@ -294,22 +305,6 @@ export function appInit() {
 		refreshLayout();
 	});
 
-	document.getElementById("import-file").addEventListener('change', (event) => {
-		var inputFile = event.target.files[0];
-		var reader = new FileReader();
-
-		reader.addEventListener('load', function (e) {
-			const tsv = e.target.result;
-			readTsv(tsv);
-		});
-		reader.readAsText(inputFile);
-	});
-
-	document.getElementById("export-btn").addEventListener('click', () => {
-		const tsv = editSaveTsv(cy, lockedNodeIds);
-		download("graph.tsv", tsv);
-	});
-
 	document.getElementById("export-meta-btn").addEventListener('click', () => {
 		const json = JSON.stringify(cy.json())
 		download("meta.json", json);
@@ -332,14 +327,6 @@ export function appInit() {
 		document.getElementById("export-tsv-textarea").value = tsv;
 
 
-	});
-
-
-	document.getElementById("export-svg-btn").addEventListener('click', () => {
-		var aTag = document.createElement('a');
-		aTag.setAttribute('href', getSvgUrl());
-		aTag.setAttribute('download', 'graph.svg');
-		aTag.click();
 	});
 
 	document.getElementById("replace-form-tsv-btn").addEventListener('click', () => {

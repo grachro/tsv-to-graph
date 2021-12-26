@@ -15,10 +15,14 @@
   
   <div id='side-panel'>
     <div id='side-panel_contents'>
-
+      <span>{{ importedFileName }}</span>
+      <br>
+      <input id="import-file" type="file" v-on:change="changeImportFileTag">
+      <br>
       <button id="import-btn" onclick="document.getElementById('import-file').click();">import from tsv</button>
-      <input id="import-file" type="file" style="display: none;">
-      <button id="export-btn">export to tsv</button>
+      <br>
+      <br>
+      <button v-on:click="clickExportTsvBtn">export to tsv</button>
       <br>
       <br>
       input tsv
@@ -35,7 +39,8 @@
       
       <br>
       <br>
-      <button id="export-svg-btn">export svg</button>
+      <button v-on:click="clickExportSvgBtn">export svg</button>
+      <span>{{svgFileName}}</span>
       <br>
       <button id="export-meta-btn">export Cytoscape.js json</button>
       <br>
@@ -47,13 +52,46 @@
 </template>
 
 <script>
-import {appInit} from './js/app.js'
+import {appInit, readTsv, exportTsv, exportSvg} from './js/app.js'
 
 
 
 export default {
   name: 'App',
+  data: function () {
+    return {
+      importedFileName:"no tilte",
+      svgFileName:"graph.svg",
+    }
+  },
   components: {
+  },
+  
+  methods: {
+    changeImportFileTag: function(event) {
+      var inputFile = event.target.files[0];
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function (e) {
+        const tsv = e.target.result;
+        readTsv(tsv);
+        
+      });
+      reader.readAsText(inputFile);
+
+      this.importedFileName = inputFile.name
+      if(this.importedFileName.endsWith(".tsv")) {
+        this.svgFileName = this.importedFileName.substring(0, this.importedFileName.length -4) + ".svg"
+      } else {
+        this.svgFileName = this.importedFileName + ".svg"
+      }
+    },
+    clickExportTsvBtn: function() {
+      exportTsv(this.importedFileName);
+    },
+    clickExportSvgBtn: function() {
+      exportSvg(this.svgFileName);
+    },
   },
   mounted: function () {
     appInit();
